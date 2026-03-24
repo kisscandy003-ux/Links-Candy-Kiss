@@ -1,137 +1,97 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-
-    <!-- ====== CAMBIA ESTO: Nombre de tu modelo ====== -->
-    <title> Candy Kiss — Links</title>
-
+    <title>Candy Kiss 🍬</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍬</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            min-height: 100%;
+            overflow-y: auto;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background: #0a0a0a;
-            position: relative;
             overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* ====== FONDO ANIMADO ====== */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(190, 40, 100, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(120, 40, 200, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(255, 50, 80, 0.1) 0%, transparent 50%),
-                linear-gradient(180deg, #0a0a0a 0%, #0d0d1a 50%, #0a0a0a 100%);
-        }
-
-        .bg-gradient::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            opacity: 0.4;
-        }
-
-        /* ====== PARTÍCULAS ====== */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* ====== FONDO ====== */
+        .bg {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; z-index: 0;
             pointer-events: none;
-            z-index: 1;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(255, 50, 120, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 120, 180, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 90%, rgba(255, 0, 80, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0a 0%, #120812 50%, #0a0a0a 100%);
         }
 
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: floatUp linear infinite;
-            opacity: 0;
+        /* ====== ORBES ====== */
+        .orb {
+            position: fixed; border-radius: 50%;
+            filter: blur(80px); opacity: 0.12;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+            z-index: 0; pointer-events: none;
         }
+        .orb.a { width: 300px; height: 300px; background: #ff1a6c; top: 15%; left: -8%; }
+        .orb.b { width: 250px; height: 250px; background: #ff69b4; bottom: 10%; right: -5%; animation-delay: -4s; }
 
-        .particle.circle {
-            background: radial-gradient(circle, rgba(255, 100, 150, 0.6), transparent);
-        }
-
-        .particle.dot {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            15% {
-                opacity: 1;
-            }
-            85% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) scale(1);
-                opacity: 0;
-            }
-        }
-
-        /* ====== ORBE BRILLANTE ====== */
-        .glow-orb {
-            position: fixed;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            animation: orbMove 8s ease-in-out infinite alternate;
-            z-index: 0;
-        }
-
-        .glow-orb.one {
-            background: #ff2d75;
-            top: 20%;
-            left: -5%;
-        }
-
-        .glow-orb.two {
-            background: #8b5cf6;
-            bottom: 10%;
-            right: -5%;
-            animation-delay: -4s;
-        }
-
-        @keyframes orbMove {
+        @keyframes orbFloat {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, -30px) scale(1.2); }
+            100% { transform: translate(40px, -25px) scale(1.15); }
+        }
+
+        /* ====== PARTICULAS ====== */
+        .particles {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+        .particle {
+            position: absolute; border-radius: 50%;
+            animation: rise linear infinite; opacity: 0;
+        }
+        @keyframes rise {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* ====== HEARTS ====== */
+        .hearts {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
+        }
+        .heart {
+            position: absolute; font-size: 16px;
+            animation: heartFloat linear infinite; opacity: 0;
+        }
+        @keyframes heartFloat {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1); opacity: 0; }
         }
 
         /* ====== CONTENEDOR PRINCIPAL ====== */
         .container {
             text-align: center;
-            padding: 50px 24px;
+            padding: 50px 24px 40px 24px;
             max-width: 440px;
             width: 100%;
             position: relative;
@@ -139,113 +99,81 @@
         }
 
         /* ====== AVATAR ====== */
-        .avatar-container {
+        .avatar-wrap {
             position: relative;
             display: inline-block;
             margin-bottom: 24px;
         }
 
         .avatar-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 140px;
-            height: 140px;
-            background: linear-gradient(135deg, #ff2d75, #8b5cf6);
-            border-radius: 50%;
-            filter: blur(25px);
-            opacity: 0.5;
+            width: 150px; height: 150px;
+            background: linear-gradient(135deg, #ff1a6c, #ff69b4);
+            border-radius: 50%; filter: blur(30px); opacity: 0.4;
             animation: glowPulse 3s ease-in-out infinite;
         }
-
         @keyframes glowPulse {
-            0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.12); }
         }
 
         .avatar-ring {
             position: relative;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            padding: 3px;
-            background: linear-gradient(135deg, #ff2d75, #ff6b9d, #c084fc, #8b5cf6);
+            width: 140px; height: 140px;
+            border-radius: 50%; padding: 3px;
+            background: linear-gradient(135deg, #ff1a6c, #ff69b4, #ffb3d9, #ff1a6c);
             background-size: 300% 300%;
-            animation: gradientSpin 4s ease infinite;
+            animation: gradMove 4s ease infinite;
         }
-
-        @keyframes gradientSpin {
+        @keyframes gradMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
         .avatar-ring img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
+            width: 100%; height: 100%;
+            border-radius: 50%; object-fit: cover;
             border: 3px solid #0a0a0a;
+            display: block;
         }
 
-        .verified-badge {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 28px;
-            height: 28px;
-            background: linear-gradient(135deg, #ff2d75, #8b5cf6);
+        .badge-v {
+            position: absolute; bottom: 5px; right: 5px;
+            width: 28px; height: 28px;
+            background: linear-gradient(135deg, #ff1a6c, #ff69b4);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            border: 3px solid #0a0a0a;
-            z-index: 3;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; border: 3px solid #0a0a0a; z-index: 3;
+            color: #fff; font-weight: 700;
         }
 
-        .online-pulse {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 16px;
-            height: 16px;
-            background: #00ff88;
-            border-radius: 50%;
-            border: 3px solid #0a0a0a;
-            z-index: 3;
+        .online-dot {
+            position: absolute; top: 5px; right: 8px;
+            width: 15px; height: 15px;
+            background: #00ff88; border-radius: 50%;
+            border: 3px solid #0a0a0a; z-index: 3;
         }
-
-        .online-pulse::after {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            width: 16px;
-            height: 16px;
-            background: #00ff88;
-            border-radius: 50%;
-            animation: onlinePing 2s ease-in-out infinite;
+        .online-dot::after {
+            content: ''; position: absolute; top: -3px; left: -3px;
+            width: 15px; height: 15px;
+            background: #00ff88; border-radius: 50%;
+            animation: ping 2s ease-in-out infinite;
         }
-
-        @keyframes onlinePing {
+        @keyframes ping {
             0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.8); opacity: 0; }
+            50% { transform: scale(2); opacity: 0; }
         }
 
         /* ====== NOMBRE ====== */
         .name {
             font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 4px;
-            letter-spacing: 1px;
+            font-size: 34px; font-weight: 700;
+            margin-bottom: 8px; letter-spacing: 1px;
         }
-
         .name span {
-            background: linear-gradient(135deg, #ff6b9d, #c084fc);
+            background: linear-gradient(135deg, #ff69b4, #ffb3d9, #ff1a6c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -253,158 +181,94 @@
 
         /* ====== BIO ====== */
         .bio {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 8px;
-            font-weight: 300;
-            line-height: 1.6;
+            font-size: 14px; color: rgba(255,255,255,0.55);
+            margin-bottom: 10px; font-weight: 300; line-height: 1.7;
         }
 
-        .bio-tagline {
-            display: inline-block;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 32px;
-            padding: 6px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .tagline {
+            display: inline-block; font-size: 12px;
+            color: rgba(255,255,255,0.45); margin-bottom: 28px;
+            padding: 6px 18px;
+            border: 1px solid rgba(255,105,180,0.2);
             border-radius: 20px;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,105,180,0.05);
         }
 
-        /* ====== CONTADOR ====== */
+        /* ====== STATS ====== */
         .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 32px;
+            display: flex; justify-content: center;
+            gap: 30px; margin-bottom: 30px;
         }
-
-        .stat {
-            text-align: center;
+        .stat-num {
+            font-size: 20px; font-weight: 700; color: #fff;
         }
-
-        .stat-number {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .stat-lbl {
+            font-size: 10px; color: rgba(255,255,255,0.4);
+            text-transform: uppercase; letter-spacing: 1.5px;
         }
 
         /* ====== BOTONES ====== */
         .links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display: flex; flex-direction: column; gap: 14px;
         }
 
         .link-btn {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 18px 24px;
-            border-radius: 16px;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
+            display: flex; align-items: center; gap: 14px;
+            padding: 18px 22px; border-radius: 16px;
+            text-decoration: none; font-weight: 600;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            border: none;
+            position: relative; overflow: hidden; cursor: pointer;
         }
 
         .link-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            content: ''; position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
             transition: left 0.6s ease;
         }
-
-        .link-btn:hover::before {
-            left: 100%;
-        }
-
-        .link-btn:hover {
-            transform: translateY(-4px) scale(1.02);
-        }
-
-        .link-btn:active {
-            transform: translateY(-1px) scale(0.99);
-        }
+        .link-btn:hover::before { left: 100%; }
+        .link-btn:hover { transform: translateY(-4px) scale(1.02); }
+        .link-btn:active { transform: translateY(-1px) scale(0.98); }
 
         .link-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
+            width: 46px; height: 46px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
         }
 
         .link-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            flex-grow: 1;
+            display: flex; flex-direction: column;
+            align-items: flex-start; flex-grow: 1;
         }
-
-        .link-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .link-subtitle {
-            font-size: 11px;
-            opacity: 0.7;
-            font-weight: 400;
-            color: rgba(255,255,255,0.7);
-        }
+        .link-title { font-size: 15px; font-weight: 600; color: #fff; }
+        .link-sub { font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 400; }
 
         .link-arrow {
-            font-size: 18px;
-            opacity: 0.5;
+            font-size: 18px; color: rgba(255,255,255,0.4);
             transition: all 0.3s;
-            color: #fff;
         }
-
         .link-btn:hover .link-arrow {
-            opacity: 1;
-            transform: translateX(4px);
+            color: #fff; transform: translateX(5px);
         }
 
-        /* --- Fanvue --- */
+        /* ---- FANVUE ---- */
         .fanvue {
-            background: linear-gradient(135deg, rgba(255, 0, 80, 0.2), rgba(200, 0, 120, 0.2));
-            border: 1px solid rgba(255, 0, 80, 0.3);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(255, 26, 108, 0.25), rgba(255, 0, 80, 0.15));
+            border: 1px solid rgba(255, 26, 108, 0.5);
+            box-shadow: 0 0 25px rgba(255, 26, 108, 0.12);
         }
         .fanvue:hover {
-            box-shadow: 0 8px 32px rgba(255, 0, 80, 0.25);
-            border-color: rgba(255, 0, 80, 0.6);
+            box-shadow: 0 8px 40px rgba(255, 26, 108, 0.35);
+            border-color: rgba(255, 26, 108, 0.8);
         }
         .fanvue .link-icon {
-            background: linear-gradient(135deg, #ff0050, #c80078);
+            background: linear-gradient(135deg, #ff1a6c, #ff0050);
         }
 
-        /* --- Instagram --- */
+        /* ---- INSTAGRAM ---- */
         .instagram {
-            background: linear-gradient(135deg, rgba(225, 48, 108, 0.2), rgba(193, 53, 132, 0.15));
+            background: linear-gradient(135deg, rgba(225, 48, 108, 0.15), rgba(193, 53, 132, 0.1));
             border: 1px solid rgba(225, 48, 108, 0.3);
-            backdrop-filter: blur(10px);
         }
         .instagram:hover {
             box-shadow: 0 8px 32px rgba(225, 48, 108, 0.25);
@@ -414,11 +278,10 @@
             background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
         }
 
-        /* --- Telegram --- */
+        /* ---- TELEGRAM ---- */
         .telegram {
-            background: linear-gradient(135deg, rgba(0, 136, 204, 0.2), rgba(0, 180, 216, 0.15));
+            background: linear-gradient(135deg, rgba(0, 136, 204, 0.15), rgba(0, 180, 216, 0.1));
             border: 1px solid rgba(0, 136, 204, 0.3);
-            backdrop-filter: blur(10px);
         }
         .telegram:hover {
             box-shadow: 0 8px 32px rgba(0, 136, 204, 0.25);
@@ -428,231 +291,229 @@
             background: linear-gradient(135deg, #0088cc, #00b4d8);
         }
 
-        /* --- TikTok --- */
+        /* ---- TIKTOK ---- */
         .tiktok {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.12);
         }
         .tiktok:hover {
-            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.3);
         }
         .tiktok .link-icon {
-            background: linear-gradient(135deg, #010101, #333);
-            border: 1px solid rgba(255,255,255,0.2);
-            position: relative;
-        }
-        .tiktok .link-icon::before {
-            content: '🎵';
-            font-size: 20px;
+            background: linear-gradient(135deg, #69C9D0, #010101, #EE1D52);
         }
 
-        /* ====== 18+ BADGE ====== */
+        /* ====== BADGE 18+ ====== */
         .age-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 24px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: rgba(255, 45, 117, 0.1);
-            border: 1px solid rgba(255, 45, 117, 0.2);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 11px;
-            font-weight: 400;
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: 28px; padding: 8px 18px; border-radius: 20px;
+            background: rgba(255, 26, 108, 0.08);
+            border: 1px solid rgba(255, 26, 108, 0.15);
+            color: rgba(255,255,255,0.45); font-size: 11px;
         }
 
-        /* ====== FOOTER ====== */
         .footer {
-            margin-top: 20px;
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 11px;
+            margin-top: 18px; padding-bottom: 20px;
+            color: rgba(255,255,255,0.15); font-size: 10px;
         }
 
-        /* ====== ANIMACIONES DE ENTRADA ====== */
-        .container > * {
+        /* ====== ANIMACIONES ENTRADA ====== */
+        .fade-in {
             opacity: 0;
-            animation: fadeSlideIn 0.6s ease forwards;
+            transform: translateY(18px);
+            animation: slideIn 0.6s ease forwards;
         }
+        .d1 { animation-delay: 0.0s; }
+        .d2 { animation-delay: 0.1s; }
+        .d3 { animation-delay: 0.15s; }
+        .d4 { animation-delay: 0.2s; }
+        .d5 { animation-delay: 0.25s; }
+        .d6 { animation-delay: 0.35s; }
+        .d7 { animation-delay: 0.45s; }
+        .d8 { animation-delay: 0.55s; }
+        .d9 { animation-delay: 0.65s; }
+        .d10 { animation-delay: 0.7s; }
+        .d11 { animation-delay: 0.75s; }
 
-        .container > *:nth-child(1) { animation-delay: 0s; }
-        .container > *:nth-child(2) { animation-delay: 0.1s; }
-        .container > *:nth-child(3) { animation-delay: 0.15s; }
-        .container > *:nth-child(4) { animation-delay: 0.2s; }
-        .container > *:nth-child(5) { animation-delay: 0.25s; }
-        .container > *:nth-child(6) { animation-delay: 0.3s; }
-        .container > *:nth-child(7) { animation-delay: 0.35s; }
-        .container > *:nth-child(8) { animation-delay: 0.4s; }
-
-        .link-btn {
-            opacity: 0;
-            animation: fadeSlideIn 0.5s ease forwards;
-        }
-        .links .link-btn:nth-child(1) { animation-delay: 0.3s; }
-        .links .link-btn:nth-child(2) { animation-delay: 0.4s; }
-        .links .link-btn:nth-child(3) { animation-delay: 0.5s; }
-        .links .link-btn:nth-child(4) { animation-delay: 0.6s; }
-
-        @keyframes fadeSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ====== RESPONSIVE ====== */
         @media (max-width: 380px) {
-            .name { font-size: 26px; }
-            .link-btn { padding: 14px 18px; }
+            .name { font-size: 28px; }
+            .link-btn { padding: 15px 18px; }
             .stats { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Fondo -->
-    <div class="bg-gradient"></div>
-    <div class="glow-orb one"></div>
-    <div class="glow-orb two"></div>
+    <!-- Fondos decorativos -->
+    <div class="bg"></div>
+    <div class="orb a"></div>
+    <div class="orb b"></div>
     <div class="particles" id="particles"></div>
+    <div class="hearts" id="hearts"></div>
 
-    <!-- Contenido -->
+    <!-- ====== CONTENIDO ====== -->
     <div class="container">
 
-        <!-- ====== AVATAR ====== -->
-        <div class="avatar-container">
+        <!-- FOTO DE PERFIL -->
+        <div class="avatar-wrap fade-in d1">
             <div class="avatar-glow"></div>
             <div class="avatar-ring">
                 <!--
-                    📷 CAMBIA LA URL DE LA FOTO:
-                    Sube tu foto a https://imgur.com (gratis)
-                    y pega aquí el link directo (debe terminar en .jpg o .png)
+                    ⚠️ IMPORTANTE: Cambia esta URL por el link DIRECTO de tu foto.
+                    Ve a https://imgur.com/a/lEcfbqq
+                    Click derecho en la imagen → "Copiar dirección de imagen"
+                    Pega aquí ese link (debe empezar con i.imgur.com)
                 -->
-                <img src="https://imgur.com/a/lEcfbqq">
+                <img src="https://i.imgur.com/YvysFeZ.png" alt="Candy Kiss">
             </div>
-            <div class="verified-badge">✓</div>
-            <div class="online-pulse"></div>
+            <div class="badge-v">✓</div>
+            <div class="online-dot"></div>
         </div>
 
-        <!--
-            ====== CAMBIA: NOMBRE ======
-        -->
-        <h1 class="name"><span>Sophia Rose</span></h1>
+        <!-- NOMBRE -->
+        <h1 class="name fade-in d2"><span>Candy Kiss</span> 🍬</h1>
 
-        <!--
-            ====== CAMBIA: TU BIO / DESCRIPCIÓN ======
-        -->
-        <p class="bio">Your favorite AI companion 💋<br>Exclusive content just for you</p>
+        <!-- BIO -->
+        <p class="bio fade-in d3">
+            Your sweetest AI fantasy 💋<br>
+            Exclusive content you won't find anywhere else 🔥
+        </p>
 
-        <span class="bio-tagline">✨ New content every day ✨</span>
+        <div class="fade-in d4">
+            <span class="tagline">🍭 Sweet, Hot & Uncensored 🍭</span>
+        </div>
 
-        <!-- Estadísticas (cambia los números) -->
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-number">15K</div>
-                <div class="stat-label">Fans</div>
+        <!-- ESTADÍSTICAS -->
+        <div class="stats fade-in d5">
+            <div>
+                <div class="stat-num">🔥</div>
+                <div class="stat-lbl">Hot</div>
             </div>
-            <div class="stat">
-                <div class="stat-number">500+</div>
-                <div class="stat-label">Posts</div>
+            <div>
+                <div class="stat-num">VIP</div>
+                <div class="stat-lbl">Content</div>
             </div>
-            <div class="stat">
-                <div class="stat-number">VIP</div>
-                <div class="stat-label">Content</div>
+            <div>
+                <div class="stat-num">24/7</div>
+                <div class="stat-lbl">Online</div>
             </div>
         </div>
 
-        <!-- ====== LINKS ====== -->
+        <!-- ====== BOTONES DE LINKS ====== -->
         <div class="links">
 
-            <!--
-                🔗 CAMBIA "#" POR TU LINK REAL DE FANVUE
-                Ejemplo: https://www.fanvue.com/tunombre
-            -->
-            <a href="#" class="https://www.fanvue.com/just-candy-kiss" target="_blank" rel="noopener">
+            <!-- ✅ FANVUE - LISTO -->
+            <a href="https://www.fanvue.com/just-candy-kiss"
+               class="link-btn fanvue fade-in d6"
+               target="_blank" rel="noopener">
                 <div class="link-icon">💎</div>
                 <div class="link-text">
                     <span class="link-title">Exclusive Content</span>
-                    <span class="link-subtitle">Subscribe on Fanvue 🔥</span>
+                    <span class="link-sub">Subscribe on Fanvue 🔥 VIP Access</span>
                 </div>
                 <span class="link-arrow">→</span>
             </a>
 
-            <!--
-                🔗 CAMBIA "#" POR TU LINK REAL DE INSTAGRAM
-                Ejemplo: https://www.instagram.com/tunombre
-            -->
-            <a href="#" class="https://www.instagram.com/just_kiss_candy?igsh=NGxuam9xbHJ5MnVh target="_blank" rel="noopener">
+            <!-- ✅ INSTAGRAM - LISTO -->
+            <a href="https://www.instagram.com/just_kiss_candy"
+               class="link-btn instagram fade-in d7"
+               target="_blank" rel="noopener">
                 <div class="link-icon">📸</div>
                 <div class="link-text">
                     <span class="link-title">Instagram</span>
-                    <span class="link-subtitle">@tunombre</span>
+                    <span class="link-sub">@just_kiss_candy</span>
                 </div>
                 <span class="link-arrow">→</span>
             </a>
 
             <!--
-                🔗 CAMBIA "#" POR TU LINK REAL DE TELEGRAM
-                Ejemplo: https://t.me/tunombre
+                ⚠️ TELEGRAM — Cambia el # por tu link real
+                Ejemplo: https://t.me/CandyKiss
+                Si NO tienes Telegram, borra desde aquí...
             -->
-            <a href="#" class="link-btn telegram" target="_blank" rel="noopener">
+            <a href="#"
+               class="link-btn telegram fade-in d8"
+               target="_blank" rel="noopener">
                 <div class="link-icon">✈️</div>
                 <div class="link-text">
                     <span class="link-title">Telegram</span>
-                    <span class="link-subtitle">Free channel 💬</span>
+                    <span class="link-sub">Join free channel 💬</span>
                 </div>
                 <span class="link-arrow">→</span>
             </a>
+            <!-- ...hasta aquí si no tienes Telegram -->
 
             <!--
-                🔗 CAMBIA "#" POR TU LINK REAL DE TIKTOK
-                Ejemplo: https://www.tiktok.com/@tunombre
+                ⚠️ TIKTOK — Cambia el # por tu link real
+                Ejemplo: https://www.tiktok.com/@just_kiss_candy
+                Si NO tienes TikTok, borra desde aquí...
             -->
-            <a href="#" class="link-btn tiktok" target="_blank" rel="noopener">
-                <div class="link-icon"></div>
+            <a href="#"
+               class="link-btn tiktok fade-in d9"
+               target="_blank" rel="noopener">
+                <div class="link-icon">🎵</div>
                 <div class="link-text">
                     <span class="link-title">TikTok</span>
-                    <span class="link-subtitle">@tunombre</span>
+                    <span class="link-sub">@just_kiss_candy</span>
                 </div>
                 <span class="link-arrow">→</span>
             </a>
+            <!-- ...hasta aquí si no tienes TikTok -->
 
         </div>
 
-        <div class="age-badge">🔞 18+ Only — Adult Content</div>
+        <div class="age-badge fade-in d10">🔞 18+ Only</div>
 
-        <p class="footer">Made with 💕</p>
+        <p class="footer fade-in d11">🍬 Candy Kiss © 2025</p>
 
     </div>
 
-    <!-- ====== SCRIPT DE PARTÍCULAS ====== -->
+    <!-- ====== EFECTOS ====== -->
     <script>
-        const container = document.getElementById('particles');
-        const colors = [
-            'rgba(255, 45, 117, 0.4)',
-            'rgba(192, 132, 252, 0.4)',
-            'rgba(255, 107, 157, 0.3)',
-            'rgba(255, 255, 255, 0.3)'
-        ];
+        // Partículas
+        (function(){
+            var c = document.getElementById('particles');
+            var cols = [
+                'rgba(255,26,108,0.35)',
+                'rgba(255,105,180,0.3)',
+                'rgba(255,179,217,0.25)',
+                'rgba(255,255,255,0.2)'
+            ];
+            for (var i = 0; i < 30; i++) {
+                var p = document.createElement('div');
+                p.className = 'particle';
+                var s = Math.random() * 4 + 1;
+                p.style.width = s + 'px';
+                p.style.height = s + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.background = cols[Math.floor(Math.random() * cols.length)];
+                p.style.animationDuration = (Math.random() * 14 + 6) + 's';
+                p.style.animationDelay = (Math.random() * 15) + 's';
+                c.appendChild(p);
+            }
+        })();
 
-        for (let i = 0; i < 40; i++) {
-            const p = document.createElement('div');
-            p.classList.add('particle');
-
-            const size = Math.random() * 4 + 1;
-            p.style.width = size + 'px';
-            p.style.height = size + 'px';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.background = colors[Math.floor(Math.random() * colors.length)];
-            p.style.animationDuration = (Math.random() * 12 + 6) + 's';
-            p.style.animationDelay = (Math.random() * 15) + 's';
-
-            if (size > 3
+        // Corazones flotantes
+        (function(){
+            var h = document.getElementById('hearts');
+            var emojis = ['💕','💗','🍬','💋','🍭','✨','💖'];
+            for (var i = 0; i < 10; i++) {
+                var d = document.createElement('div');
+                d.className = 'heart';
+                d.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                d.style.left = Math.random() * 100 + '%';
+                d.style.fontSize = (Math.random() * 12 + 10) + 'px';
+                d.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                d.style.animationDelay = (Math.random() * 20) + 's';
+                h.appendChild(d);
+            }
+        })();
     </script>
 
 </body>
