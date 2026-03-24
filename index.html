@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Tu Nombre - Links</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            overflow: hidden;
+        }
+
+        /* Partículas de fondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Foto de perfil */
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .avatar-ring {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 4px;
+            animation: rotateRing 3s linear infinite;
+        }
+
+        @keyframes rotateRing {
+            0% { background: linear-gradient(0deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+            25% { background: linear-gradient(90deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+            50% { background: linear-gradient(180deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+            75% { background: linear-gradient(270deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+            100% { background: linear-gradient(360deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #1a1a2e;
+        }
+
+        .status-dot {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            background: #00ff88;
+            border-radius: 50%;
+            border: 3px solid #1a1a2e;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .bio {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .bio .emoji-line {
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        /* Botones de links */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 24px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-btn:hover::before {
+            left: 100%;
+        }
+
+        .link-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .link-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .link-icon {
+            font-size: 22px;
+        }
+
+        /* Estilos específicos por plataforma */
+        .fanvue {
+            background: linear-gradient(135deg, #ff4d6d, #ff006e);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 0, 110, 0.3);
+        }
+
+        .instagram {
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.3);
+        }
+
+        .telegram {
+            background: linear-gradient(135deg, #0088cc, #00b4d8);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+        }
+
+        .tiktok {
+            background: linear-gradient(135deg, #010101, #333333);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .tiktok .link-icon {
+            background: linear-gradient(135deg, #69C9D0, #EE1D52);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+        }
+
+        /* Animación de entrada */
+        .link-btn {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.5s forwards;
+        }
+
+        .link-btn:nth-child(1) { animation-delay: 0.1s; }
+        .link-btn:nth-child(2) { animation-delay: 0.2s; }
+        .link-btn:nth-child(3) { animation-delay: 0.3s; }
+        .link-btn:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .avatar-wrapper {
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Partículas de fondo -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Avatar -->
+        <div class="avatar-wrapper">
+            <div class="avatar-ring">
+                <!-- CAMBIA ESTA URL POR TU FOTO -->
+                <img class="avatar" 
+                     src="https://via.placeholder.com/130x130/ff006e/ffffff?text=♡" 
+                     alt="Foto de perfil">
+            </div>
+            <div class="status-dot"></div>
+        </div>
+
+        <!-- Nombre y bio -->
+        <!-- CAMBIA EL NOMBRE Y LA BIO -->
+        <h1 class="name">✨ Tu Nombre ✨</h1>
+        <p class="bio">
+            Tu descripción aquí 💋
+            <br>
+            <span class="emoji-line">🔥 Contenido exclusivo 🔥</span>
+        </p>
+
+        <!-- Links -->
+        <div class="links">
+            <!-- CAMBIA LOS ENLACES (#) POR TUS URLs REALES -->
+            <a href="#" class="link-btn fanvue" target="_blank">
+                <span class="link-icon">💎</span>
+                Contenido Exclusivo — Fanvue
+            </a>
+
+            <a href="#" class="link-btn instagram" target="_blank">
+                <span class="link-icon">📸</span>
+                Sígueme en Instagram
+            </a>
+
+            <a href="#" class="link-btn telegram" target="_blank">
+                <span class="link-icon">✈️</span>
+                Canal de Telegram
+            </a>
+
+            <a href="#" class="link-btn tiktok" target="_blank">
+                <span class="link-icon">🎵</span>
+                TikTok
+            </a>
+        </div>
+
+        <p class="footer">💕 Gracias por tu apoyo 💕</p>
+    </div>
+
+    <script>
+        // Crear partículas animadas
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            particle.style.animationDelay = (Math.random() * 10) + 's';
+            particle.style.width = (Math.random() * 4 + 1) + 'px';
+            particle.style.height = particle.style.width;
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
